@@ -50,7 +50,7 @@ function time_difference(string $time, DateTime $current_time)
         $relative_time = $diff->i . ' ' .
         get_noun_plural_form($diff->i, 'минуту', 'минуты', 'минут');
     } elseif ($diff->s >= 0) {
-        $relative_time = 'Только что';
+        $relative_time = 'Менее минуты';
     } else {
         $relative_time = '';
     }
@@ -419,7 +419,7 @@ function validate_correct_password(array $validation_array, string $parameter_na
     $email = $validation_array['login'];
     $sql = "SELECT $password_column_name FROM $table_name WHERE $users_column_name = ?";
     $db_password = secure_query_bind_result($connection, $sql, false, $email);
-    $password = mysqli_fetch_row($db_password, MYSQLI_ASSOC)['password'] ?? null;
+    $password = mysqli_fetch_row($db_password)['password'] ?? null;
     return ($password != null) ? (!password_verify($validation_array[$parameter_name], $password) ? "Вы ввели неверный пароль" : null) : null;
 }
 
@@ -1189,7 +1189,7 @@ function get_messages($connection, $user_id)
 */
 function add_message($connection, $sender_id, $receiver_id, string $message)
 {
-    $add_message_query = "INSERT INTO messages SET sender_id = ?, receiver_id = ?, dt_add = ?, content = ?";
+    $add_message_query = "INSERT INTO messages SET sender_id = ?, receiver_id = ?, dt_add = ?, content = ?, was_read = 0";
     $message = trim($message);
     $current_time = date('Y-m-d H:i:s');
 

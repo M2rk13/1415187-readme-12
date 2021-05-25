@@ -40,7 +40,8 @@
       <?php foreach ($dialogs as $dialog_id => $dialog) : ?>
         <ul class="messages__list tabs__content
             <?= ($active_dialog_id == $dialog_id) ? 'tabs__content--active' : '' ?>">
-            <?php foreach ($dialog['messages'] as $message) : ?>
+            <?php if (isset($dialog['messages'])) :
+                foreach ($dialog['messages'] as $message) : ?>
             <li class="messages__item <?= ($user['id'] == $message['sender_id']) ? 'messages__item--my' : '' ?>">
                   <div class="messages__info-wrapper">
                   <div class="messages__item-avatar">
@@ -68,7 +69,9 @@
                     <?= $message['content'] ?? '' ?>
                   </p>
               </li>
-            <?php endforeach; ?>
+                <?php endforeach;
+              else: var_dump('111');
+              endif; ?>
         </ul>
       <?php endforeach; ?>
         <div class="comments">

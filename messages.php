@@ -36,6 +36,7 @@ if (($dialogs !== null) || ($_GET['id'] !== null)) {
 }
 
 $messages = get_messages($connection, $user['id']);
+var_dump($messages, $dialogs);
 foreach ($messages as $message) {
     array_push($dialogs[$message['dialog']]['messages'], $message);
 }
