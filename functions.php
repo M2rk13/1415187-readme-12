@@ -461,6 +461,24 @@ function get_user_data(mysqli $connection, string $email)
 }
 
 /**
+ * Ищет данные пользователя в активном диалоге по id
+ *
+ * @param mysqli $connection подключение к БД
+ * @param int|null $id ID пользователя
+ * @return array ассоциативный массив с данными пользователя
+ */
+function get_user_data_dialog (mysqli $connection, $id)
+{
+    if ($id != null) {
+        $sql = "SELECT username, avatar FROM users WHERE id = ?";
+        $result = secure_query_bind_result($connection, $sql, false, $id);
+        return mysqli_fetch_assoc($result);
+    } else {
+        return null;
+    }
+}
+
+/**
  * Записывает данные пользователя из сессии, если аутентификация проведена
  * @return array ассоциативный массив с данными пользователя
 */
